@@ -8,7 +8,7 @@ const openai = new OpenAI({
 const summarize = async (text) => {
   try {
     const res = await openai.chat.completions.create({
-      model: "gpt-4",
+      model: "gpt-4o-mini",
       messages: [
         { role: "user", content: `Summarize this in a fun, casual tone:\n\n${text}` },
       ],
