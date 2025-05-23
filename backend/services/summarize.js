@@ -1,4 +1,3 @@
-// backend/services/summarize.js
 const OpenAI = require("openai");
 
 const openai = new OpenAI({
@@ -6,9 +5,14 @@ const openai = new OpenAI({
 });
 
 const summarize = async (text) => {
+  if (!text || typeof text !== "string") {
+    console.log("⚠️ Invalid input to summarize():", text);
+    return "No content to summarize.";
+  }
+
   try {
     const res = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
+      model: "gpt-4",
       messages: [
         { role: "user", content: `Summarize this in a fun, casual tone:\n\n${text}` },
       ],
@@ -18,7 +22,7 @@ const summarize = async (text) => {
     return res.choices[0].message.content.trim();
   } catch (err) {
     console.error("Summarization error:", err.message);
-    return "Couldn’t summarize this one.";
+    return "Error generating summary.";
   }
 };
 
